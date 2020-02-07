@@ -2,6 +2,11 @@
 
 <?php
 
+    $firstName = '';
+    $lastName = '';
+    $email = '';
+    $password = '';
+
 if(isset($_POST['submit'])){
     if(isset($_POST['first_name']) && !empty($_POST['first_name'])){
         $firstName = $mysqli->real_escape_string(trim($_POST['first_name']));
@@ -28,10 +33,6 @@ if(isset($_POST['submit'])){
         $empty_password = "Password can not be empty you idiot!";
     }
     
-    
-    
-    
-  
     $query = "INSERT INTO users (first_name, last_name, email, password, admin, created_at) VALUES ('$firstName', '$lastName', '$email', '$password', 0, NOW())";
     $result = $mysqli->query($query);
   
@@ -76,10 +77,20 @@ if(isset($_POST['submit'])){
     <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" name="email" class="form-control" placeholder="Enter email">
+        <?php 
+            if(empty($email)){
+                echo $empty_email;
+            };
+        ?>
     </div>
     <div class="form-group">
         <label for="password">Password</label>
         <input type="password" name="password" class="form-control" placeholder="Password">
+        <?php 
+            if(empty($password)){
+                echo $empty_password;
+            };
+        ?>
     </div>
     <button type="submit" name="submit" class="btn btn-primary">Submit</button>
     </form>
