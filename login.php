@@ -15,7 +15,11 @@ if(isset($_POST['submit'])){
         $_SESSION['password'] = $password;
         header("Location: admin/index.php");
     } else {
-        echo "That email does not exist in our database. Please register for an account";
+        echo "<div class='container'>
+                <div class='alert alert-danger mt-5'>
+                    That email does not exist in our database. Please register for an account
+                </div>
+              </div>";
     }
 
     $query = "SELECT * FROM users WHERE email = $email AND password = $password";
