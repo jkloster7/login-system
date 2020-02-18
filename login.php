@@ -7,7 +7,7 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $emailCheck = "SELECT * FROM users WHERE email = '$email'";
+    $emailCheck = "SELECT * FROM users WHERE email = '$email' AND password = '$password";
     $result = $mysqli->query($emailCheck);
 
     if(!empty($result) && $result->num_rows > 0){
@@ -17,7 +17,7 @@ if(isset($_POST['submit'])){
     } else {
         echo "<div class='container'>
                 <div class='alert alert-danger mt-5'>
-                    That email does not exist in our database. Please register for an account
+                    Email or password are invalid. Please login.
                 </div>
               </div>";
     }
