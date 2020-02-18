@@ -1,3 +1,6 @@
+<?php include('../includes/database.php'); ?>
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,5 +11,6 @@
 </head>
 <body>
     <h1 class="text-center">Admin Panel</h1>
+    <p><?php  echo "Hello " . $_SESSION['email']; ?></p>
 </body>
 </html>

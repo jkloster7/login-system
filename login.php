@@ -1,11 +1,26 @@
 <?php include('includes/header.php'); ?>
+<?php session_start(); ?>
 
 <?php
 
 if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    echo $email . ' ' . $password;
+
+    $emailCheck = "SELECT * FROM users WHERE email = '$email'";
+    $result = $mysqli->query($emailCheck);
+
+    if(!empty($result) && $result->num_rows > 0){
+        $_SESSION['email'] = $email;
+        $_SESSION['password'] = $password;
+        header("Location: admin/index.php");
+    } else {
+        echo "That email does not exist in our database. Please register for an account";
+    }
+
+    $query = "SELECT * FROM users WHERE email = $email AND password = $password";
+    $result = $mysqli->query($query);
+    
 }
 
 ?>
@@ -14,7 +29,7 @@ if(isset($_POST['submit'])){
     <h1 class="text-center">Login</h1>
     <form method="POST" action="">
     <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
+        <label for="email">Email address</label>
         <input type="email" name="email" class="form-control" placeholder="Enter email">
     </div>
     <div class="form-group">
