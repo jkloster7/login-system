@@ -7,10 +7,16 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $emailCheck = "SELECT * FROM users WHERE email = '$email' AND password = '$password";
-    $result = $mysqli->query($emailCheck);
+    $emailCheck = "SELECT * FROM users WHERE email = '$email' AND password = $password";
+    $emailResult = $mysqli->query($emailCheck);
 
-    if(!empty($result) && $result->num_rows > 0){
+    if(!$emailCheck) {
+
+        die("Query Failed " . mysqli_error($mysqli));
+
+    }
+
+    if(!empty($emailResult) && $emailResult->num_rows > 0){
         $_SESSION['email'] = $email;
         $_SESSION['password'] = $password;
         header("Location: admin/index.php");
