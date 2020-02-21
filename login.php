@@ -1,4 +1,5 @@
 <?php include('includes/header.php'); ?>
+<?php include('classes/User.php'); ?>
 <?php session_start(); ?>
 
 <?php
@@ -9,12 +10,6 @@ if(isset($_POST['submit'])){
 
     $emailCheck = "SELECT * FROM users WHERE email = '$email' AND password = $password";
     $emailResult = $mysqli->query($emailCheck);
-
-    if(!$emailCheck) {
-
-        die("Query Failed " . mysqli_error($mysqli));
-
-    }
 
     if(!empty($emailResult) && $emailResult->num_rows > 0){
         $_SESSION['email'] = $email;
@@ -27,9 +22,6 @@ if(isset($_POST['submit'])){
                 </div>
               </div>";
     }
-
-    $query = "SELECT * FROM users WHERE email = $email AND password = $password";
-    $result = $mysqli->query($query);
     
 }
 

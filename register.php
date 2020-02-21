@@ -1,5 +1,4 @@
 <?php include('includes/header.php'); ?>
-<?php include('classes/User.php'); ?>
 
 <?php
     
@@ -40,27 +39,25 @@
             $empty_password = "Password can not be empty you idiot!";
         }
     
-        $emailCheck = "SELECT * FROM users WHERE email = $email";
-        $row = $mysqli->query($emailCheck);
-        echo $row;
-        $rowCount = mysqli_num_rows($row);
-        if($rowCount > 0){
-            echo "Sorry that email already exists";
-        } else {
-            $query = "INSERT INTO users (first_name, last_name, email, password, admin, created_at) VALUES ('$firstName', '$lastName', '$email', '$password', 0, NOW())";
-            $result = $mysqli->query($query);
+        /* Check for existing email */
+        $emailCheck = "SELECT * FROM users WHERE email = '$email'";
+        $emailResult = $mysqli->query($emailCheck);
+
+        if(!$emailResult){
+            die("Failed " . mysqli_error($mysqli));
         }
         
-        if($result > 0){
-            echo "User created";
+        if(!empty($emailResult) && $emailResult->num_rows == 0){
+            /* Insert user into database */
+            $query = "INSERT INTO users (first_name, last_name, email, password, admin, created_at) VALUES ('$firstName', '$lastName', '$email', '$password', 0, NOW())";
+            $result = $mysqli->query($query);
+            echo "<div class='container'><div class='alert alert-warning mt-5'>User created</div></div>";
         } else {
-            echo "Please try again";
-        }
-    
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-            echo($email . " is a valid email address");
-        } else {
-            echo $email . " is not a valid email address";
+            echo "<div class='container'>
+                    <div class='alert alert-danger mt-5'>
+                        This email already exists in our database.
+                    </div>
+                  </div>";
         }
         
     }
