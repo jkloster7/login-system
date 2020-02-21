@@ -1,4 +1,5 @@
 <?php include('includes/header.php'); ?>
+<?php include('classes/User.php'); ?>
 
 <?php
     
@@ -27,7 +28,9 @@
         }
     
         if(isset($_POST['email']) && !empty($_POST['email'])){
-            $email = $mysqli->real_escape_string(trim($_POST['email']));
+            if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $email = $mysqli->real_escape_string(trim($_POST['email']));
+            }
         } else {
             $empty_email = "Email can not be empty you idiot!";
         }
@@ -39,19 +42,17 @@
             $empty_password = "Password can not be empty you idiot!";
         }
     
-        /* Check for existing email */
         $emailCheck = "SELECT * FROM users WHERE email = '$email'";
         $emailResult = $mysqli->query($emailCheck);
-
-        if(!$emailResult){
-            die("Failed " . mysqli_error($mysqli));
-        }
         
         if(!empty($emailResult) && $emailResult->num_rows == 0){
-            /* Insert user into database */
             $query = "INSERT INTO users (first_name, last_name, email, password, admin, created_at) VALUES ('$firstName', '$lastName', '$email', '$password', 0, NOW())";
             $result = $mysqli->query($query);
-            echo "<div class='container'><div class='alert alert-warning mt-5'>User created</div></div>";
+            if(!empty($result) || $result->num_rows > 0){
+                echo "<div class='container'><div class='alert alert-warning mt-2'>User created</div></div>";
+            } else {
+                echo "<div class='container'><div class='alert alert-danger mt-2'>We were not able to complete this request. Please try again</div></div>";
+            }
         } else {
             echo "<div class='container'>
                     <div class='alert alert-danger mt-5'>
@@ -59,7 +60,7 @@
                     </div>
                   </div>";
         }
-        
+
     }
 ?>
 
