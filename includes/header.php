@@ -1,4 +1,4 @@
-<?php include('includes/database.php'); ?>
+<?php include('init.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
