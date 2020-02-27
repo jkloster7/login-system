@@ -1,67 +1,12 @@
 <?php include('includes/header.php'); ?>
 <?php include('classes/User.php'); ?>
+<?php session_start(); ?>
 
 <?php
     
-    $empty_firstName = '';
-    $empty_lastName = '';
-    $empty_email = '';
-    $empty_password = '';
+    $user = new User();
+    $user->register();
 
-    if(isset($_POST['submit']) ){
-
-        $firstName = $_POST['first_name'];
-        $lastName = $_POST['last_name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-
-        if(isset($_POST['first_name']) && !empty($_POST['first_name'])){
-            $firstName = $mysqli->real_escape_string(trim($_POST['first_name']));
-        } else {
-            $empty_firstName = "First name can not be empty you idiot!";
-        }
-    
-        if(isset($_POST['last_name']) && !empty($_POST['last_name'])){
-            $lastName = $mysqli->real_escape_string(trim($_POST['last_name']));
-        } else {
-            $empty_lastName = "Last name can not be empty you idiot!";
-        }
-    
-        if(isset($_POST['email']) && !empty($_POST['email'])){
-            if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-                $email = $mysqli->real_escape_string(trim($_POST['email']));
-            }
-        } else {
-            $empty_email = "Email can not be empty you idiot!";
-        }
-    
-        if(isset($_POST['password']) && !empty($_POST['password'])){
-            $password = $mysqli->real_escape_string(trim($_POST['password']));
-            $password = md5($password);
-        } else {
-            $empty_password = "Password can not be empty you idiot!";
-        }
-    
-        $emailCheck = "SELECT * FROM users WHERE email = '$email'";
-        $emailResult = $mysqli->query($emailCheck);
-        
-        if(!empty($emailResult) && $emailResult->num_rows == 0){
-            $query = "INSERT INTO users (first_name, last_name, email, password, admin, created_at) VALUES ('$firstName', '$lastName', '$email', '$password', 0, NOW())";
-            $result = $mysqli->query($query);
-            if(!empty($result) || $result->num_rows > 0){
-                echo "<div class='container'><div class='alert alert-warning mt-2'>User created</div></div>";
-            } else {
-                echo "<div class='container'><div class='alert alert-danger mt-2'>We were not able to complete this request. Please try again</div></div>";
-            }
-        } else {
-            echo "<div class='container'>
-                    <div class='alert alert-danger mt-5'>
-                        This email already exists in our database.
-                    </div>
-                  </div>";
-        }
-
-    }
 ?>
 
 <div class="container">
@@ -72,7 +17,7 @@
         <input type="text" name="first_name" class="form-control" placeholder="Enter first name">
         <?php 
             if(empty($firstName)){
-                echo $empty_firstName;
+                echo $user->empty_firstName;
             };
         ?>
     </div>
@@ -81,7 +26,7 @@
         <input type="text" name="last_name" class="form-control" placeholder="Enter last name">
         <?php 
             if(empty($lastName)){
-                echo $empty_lastName;
+                echo $user->empty_lastName;
             };
         ?>
     </div>
@@ -90,7 +35,7 @@
         <input type="email" name="email" class="form-control" placeholder="Enter email">
         <?php 
             if(empty($email)){
-                echo $empty_email;
+                echo $user->empty_email;
             };
         ?>
     </div>
@@ -99,7 +44,7 @@
         <input type="password" name="password" class="form-control" placeholder="Password">
         <?php 
             if(empty($password)){
-                echo $empty_password;
+                echo $user->empty_password;
             };
         ?>
     </div>
