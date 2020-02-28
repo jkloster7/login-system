@@ -2,7 +2,7 @@
 
     <div class="container">
         <h1>Welcome to the Grocery App</h1>
-        <p>This is the new and improved app.</p>
+        <p>This is the new and improved grocery app.</p>
     </div>
     
 <?php include('includes/footer.php'); ?>
