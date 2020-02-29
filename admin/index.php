@@ -1,4 +1,5 @@
-<?php include('../includes/database.php'); ?>
+<?php include('../includes/admin-header.php'); ?>
+<?php include('../classes/User.php'); ?>
 <?php session_start(); ?>
 
 <!DOCTYPE html>
@@ -14,3 +15,5 @@
     <p><?php  echo "Hello " . $_SESSION['email']; ?></p>
 </body>
 </html>
+
+<?php include('../includes/footer.php');

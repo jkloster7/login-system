@@ -1,2 +1,46 @@
 /* main css */
 
+.primary-color {
+    color: #00DFA5;
+}
+
+.secondary-color {
+    color: #1C5E4D;
+}
+
+.wrapper {
+    background-image: url("../images/stack-of-fruit.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 740px;
+}
+
+.login-container {
+    background-color: #00DFA5;
+    opacity: .9;
+    border-radius: 5px;
+    border: solid 2px #1C5E4D;
+    padding: 2% 5% 10% 5%;
+    position: relative;
+    top: 150px;
+}
+
+.header {
+    height: auto;
+    background-color: #00DFA5;
+    color: #333;
+    border-bottom: solid 1px #1C5E4D;
+}
+
+.footer {
+    height: auto;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: #00DFA5;
+}
+
+.btn-custom {
+    background-color: #1C5E4D;
+    color: #fff;
+}
